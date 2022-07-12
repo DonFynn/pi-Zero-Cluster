@@ -3,35 +3,55 @@ title Pi Zero W cluster
 footer (C)2022 Fynn Conor Donnellan
 skinparam NoteShadowing true
 skinparam BackgroundColor #fff/aaf
-
+skinparam CardBackgroundColor #fff/aaf
+skinparam CloudBackgroundColor #fff/green
 legend
 The Pi Zero Cluster
-4x Pi Zero W
-1x P400
-USB data
-USB Power
-Wifi
+HW:
+    4x Pi Zero W
+    1x P400
+    USB data
+    USB Power
+    Wifi
+SW:
+    Linux
+    Docker + Docker Swarm
+    SSH
+Setup:
+    each node has a user "node" similar to "pi" in previous versions 
 end legend
 
-card piZ.1 {
+actor node
+
+card "piz1" as piZ.1 {
     card "32G" as piZ.1.32G
+    interface "5V" as piZ.1.power
+    interface "Data" as piZ.1.data
 }
-card piZ.2 {
+card "piz2" as piZ.2 {
     card "32G" as piZ.2.32G
+    interface "5V" as piZ.2.power
+    interface "Data" as piZ.2.data
 }
-card piZ.3 {
+card "piz3" as piZ.3 {
     card "32G" as piZ.3.32G
+    interface "5V" as piZ.3.power
+    interface "Data" as piZ.3.data
 }
-card piZ.4 {
+card "piz4" as piZ.4 {
     card "32G" as piZ.4.32G
+    interface "5V" as piZ.4.power
+    interface "Data" as piZ.4.data
 }
-card pi400.1 {
+card "piz0" as  pi400.1 {
     card "64G" as pi400.1.64G
+    interface "5V" as pi400.1.power
+    interface "Data" as pi400.1.data
 }
 
 cloud wifi
 
-card power.1 <<USB>> {
+card power.1 <<POWER>> {
     interface "1" as power.1.1
     interface "2" as power.1.2
     interface "3" as power.1.3
@@ -51,23 +71,23 @@ card USB.1 <<USB>> {
 
 
 ''Power supply
-piZ.1 -- power.1.1
-piZ.2 -- power.1.2
-piZ.3 -- power.1.3
-piZ.4 -- power.1.4
+piZ.1.power -- power.1.1 : 5V
+piZ.2.power -- power.1.2 : 5V
+piZ.3.power -- power.1.3 : 5V
+piZ.4.power -- power.1.4 : 5V
 
 ''USB Data
-pi400.1 -- USB.1.0
-piZ.1 -- USB.1.1
-piZ.2 -- USB.1.2
-piZ.3 -- USB.1.3
-piZ.4 -- USB.1.4
+pi400.1.data -- USB.1.0
+piZ.1.data -- USB.1.1
+piZ.2.data -- USB.1.2
+piZ.3.data -- USB.1.3
+piZ.4.data -- USB.1.4
 
 ''wifi 
-wifi -- piZ.1 : wifi
-wifi -- piZ.2 : wifi
-wifi -- piZ.3 : wifi
-wifi -- piZ.4 : wifi
-wifi -- pi400.1 : wifi
+wifi -- piZ.1 : IP 101
+wifi -- piZ.2 : IP 102
+wifi -- piZ.3 : IP 103
+wifi -- piZ.4 : IP 104
+wifi -- pi400.1 : IP 100
 
 @enduml
