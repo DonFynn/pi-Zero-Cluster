@@ -1,3 +1,9 @@
 = pi-Zero-Cluster
 
 https://www.youtube.com/watch?v=qSpfWP-Fgjc
+This is where I got the information on how to do most of the things.
+
+https://www.raspberrypi.com/software/
+This where I installed the Raspberrypi Imager. With this application, you can image a SD-Card to have the proper OS for your raspberrypi installed before you put it in. This will obviously come to hand when we are going to be setting up the cluster´s software.
+
+Whilst I was doing this, my father made a nice image to show what we will need for the cluster to work. We will need to assign static IPs to all of the individual piZs, edit the host file and include important network information, create a number of ssh keys and connections to all of the piZs and much more. All of that is included in the following plantuml iamge.
