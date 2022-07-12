@@ -19,6 +19,7 @@ SW:
     SSH
 Setup:
     each node has a user "node" similar to "pi" in previous versions 
+    initial testing passowrd: "password of choice"
 end legend
 
 actor node
