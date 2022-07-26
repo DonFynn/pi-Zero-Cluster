@@ -10,3 +10,7 @@ Whilst I was doing this, my father made a nice image to show what we will need f
 
 .overtview of setup
 image::images/context.png[]
+
+We then downlaoded docker and set it up witht the help of this video.
+https://www.youtube.com/watch?v=-jLdkDxCDMo
+A few steps might have to be done deifferently, especially when one gets to the point to initialize the swarm. There we had to log int our own router and assign the static IPs for all of the nodes (piZ1, piZ2, piZ3, piZ4). When doing so, it is important to specify the leasetime to infinite to prevent the IPs from changing later. I would recommend always looking at the settings from the command "ip a" before changing the IPs and MACs on your router.
