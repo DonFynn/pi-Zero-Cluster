@@ -18,4 +18,13 @@ A few steps might have to be done deifferently, especially when one gets to the 
 
 == gadget ethernet and serial
 
-We had to make the piZeros into functioning ethernet gadgets. To achieve this , we used https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget/ethernet-tweaks. We imaged oe of the disks to the full extent that is described in this tutorial and then copied all of it´s contents into a file to image the other 3 nodes. Instead of using the pi itself as the gateway, we used a commander node and it´s IP as the router/gateway. We also did not actually use a serial conection to do any of this, instead using an already established ssh connection, although we did run into some errors along the way and we did have to completely reconfigure the IP etc. of the first node we were working on to ensure the ssh connecton, because it broke a few times. Otherwise this tutorial worked just about fine. We also recommend maybe buying this useful little gadget https://shop.pimoroni.com/products/cluster-hat?variant=22064645063, as it may just relieve you of a lot of work and stress with having to use individual power supplies and USB hubs and so forth and so on.
+We had to make the piZeros into functioning ethernet gadgets. To achieve this , we used https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget/ethernet-tweaks. We imaged oe of the disks to the full extent that is described in this tutorial and then copied all of it´s contents into a file to image the other 3 nodes. Instead of using the pi itself as the gateway, we used a commander node and it´s IP as the router/gateway. We also did not actually use a serial conection to do any of this, instead using an already established ssh connection, although we did run into some errors along the way and we did have to completely reconfigure the IP etc. of the first node we were working on to ensure the ssh connecton, because it broke a few times. Otherwise this tutorial worked just about fine. We also recommend maybe buying this useful little gadget https://shop.pimoroni.com/products/cluster-hat?variant=22064645063, as it may just relieve you of a lot of work and stress with having to use individual power supplies and USB hubs and so forth and so on. 
+
+== regenerating ssh keys
+
+.regenerate keys
+----
+sudo dpkg-reconfigure openssh-server
+----
+
+Because we had cloned EVERYTHING from one disk to another, we had also cloned the ssh keys. This meant, logging into any of the nodes would result in logging into the first node. This problem is easily resolved by properly regenerating the ssh keys on every cluster one after the other, by logging into the original first, regening the ssh key for it. Then, you´ll want to log into the next node, still using the old ssh key and repeat the process until you are done with every node. You should then be able to log into every node individually again.
