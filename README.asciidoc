@@ -1,4 +1,5 @@
 = pi-Zero-Cluster
+:toc: right
 
 == docker
 https://www.youtube.com/watch?v=qSpfWP-Fgjc
@@ -45,3 +46,35 @@ cat id_rsa.pub
 ----
 
 and then copying that into the respctive field. 
+
+== Set-up cluster worker
+
+.copy worker script to node
+[source,BASH]
+----
+scp cluster-setup/initial-worker.sh nodex:/path/initial.sh
+----
+
+.copy manager script to node
+[source,BASH]
+----
+scp cluster-setup/initial-manager.sh nodex:/path/initial.sh
+----
+
+.Start install script on node
+[source,BASH]
+----
+ssh nodex initial.sh
+----
+
+=== The install scripts
+
+.worker script
+----
+include::./cluster-setup/initial-worker.sh[]
+----
+
+.manager script
+----
+include::./cluster-setup/initial-manager.sh[]
+----
