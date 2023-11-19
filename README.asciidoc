@@ -37,8 +37,9 @@ We got completely new cluster nodes after nearly a year of not working on this a
 
 We decided to image them with the Raspberry OS (Legacy-64bit) Lite. You will want to get the Raspberry imager for this obviously. Now, you want to allow the pis to access the WiFi and give them SSID and password, as this will make the process way easier. Then, you will want to give them hostnames, e.g. "piZc1/2/3/4". In our case, we specify the rest to be located in Germany. Then, we will go on to set a username and a password for the pi. The username can be the same as the hostname, that shouldn´t be a problem. You will need this to enable SSH. When enabling ssh, you will want to make it only accessible with your public key, more of which can be added after you´re done configuring. You can add yours by going to your local machine and doing the following:
 
+[source,BASH]
 ----
-cd .
+cd
 cd .ssh
 cat id_rsa.pub
 ----
