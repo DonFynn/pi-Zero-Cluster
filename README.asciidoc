@@ -28,3 +28,19 @@ sudo dpkg-reconfigure openssh-server
 ----
 
 Because we had cloned EVERYTHING from one disk to another, we had also cloned the ssh keys. This meant, logging into any of the nodes would result in logging into the first node. This problem is easily resolved by properly regenerating the ssh keys on every cluster one after the other, by logging into the original first, regening the ssh key for it. Then, you´ll want to log into the next node, still using the old ssh key and repeat the process until you are done with every node. You should then be able to log into every node individually again.
+
+== new pis for the cluster and reimagery
+
+We got completely new cluster nodes after nearly a year of not working on this anymore. The new pis have to be reimaged and set up completely by scratch. Maybe the stuff that we used before will still work, but there is no guarantee. I will also start adding files for 3D-printing all the stuff that one needs for the cluster if one isn´t into buying it. By the way, the new pis are raspberry pie 02W.
+
+== new images for the pis
+
+We decided to image them with the Raspberry OS (Legacy-64bit) Lite. You will want to get the Raspberry imager for this obviously. Now, you want to allow the pis to access the WiFi and give them SSID and password, as this will make the process way easier. Then, you will want to give them hostnames, e.g. "piZc1/2/3/4". In our case, we specify the rest to be located in Germany. Then, we will go on to set a username and a password for the pi. The username can be the same as the hostname, that shouldn´t be a problem. You will need this to enable SSH. When enabling ssh, you will want to make it only accessible with your public key, more of which can be added after you´re done configuring. You can add yours by going to your local machine and doing the following:
+
+----
+cd .
+cd .ssh
+cat id_rsa.pub
+----
+
+and then copying that into the respctive field. 
