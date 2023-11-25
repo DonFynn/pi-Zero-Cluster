@@ -78,3 +78,11 @@ include::./cluster-setup/initial-worker.sh[]
 ----
 include::./cluster-setup/initial-manager.sh[]
 ----
+
+== basics of ssh
+
+To ssh into your newly setup pis, you will want to do the following:
+
+----
+ssh hostnameOfYourPi@usernameOfYourPi
+----
