@@ -67,6 +67,56 @@ cat id_rsa.pub
 
 and then copying that into the respctive field. 
 
+== update nodes OS
+
+the following shell script gets copied to the systems below:
+
+.Script that gets copied `cluster-setup/initial-setup.sh`
+[source.BASH]
+----
+include::cluster-setup/initial-setup.sh[]
+----
+
+.short script to run thruogh all 4 systems
+[source,BASH]
+----
+for system in piZc1 piZc2 piZc3 piZc4
+    do
+    scp ./initial-setup.sh ${system}@${system}:/tmp/
+    nohup ssh ${system}@${system} bash /tmp/initial-setup.sh &
+done
+----
+
+== install docker 
+
+the following shell script gets copied to the systems below:
+
+.Script that gets copied `cluster-setup/initial-setup.sh`
+[source.BASH]
+----
+include::cluster-setup/initial-docker.sh[]
+----
+
+.short script to run thruogh all 4 systems
+[source,BASH]
+----
+for system in piZc1 piZc2 piZc3 piZc4
+    do
+    scp ./initial-docker.sh ${system}@${system}:/tmp/
+    ssh ${system}@${system} bash /tmp/initial-docker.sh 
+done
+----
+
+.short script to run through all 4 systems
+[source,BASH]
+----
+for system in piZc1 piZc2 piZc3 piZc4
+    do
+    ssh ${system}@${system} docker --version
+done
+----
+
+
 == Set-up cluster worker
 
 .copy worker script to node
@@ -85,18 +135,6 @@ scp cluster-setup/initial-manager.sh nodex:/path/initial.sh
 [source,BASH]
 ----
 ssh nodex initial.sh
-----
-
-=== The install scripts
-
-.worker script
-----
-include::./cluster-setup/initial-worker.sh[]
-----
-
-.manager script
-----
-include::./cluster-setup/initial-manager.sh[]
 ----
 
 == basics of ssh
