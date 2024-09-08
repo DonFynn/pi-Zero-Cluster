@@ -1,21 +1,41 @@
 = pi-Zero-Cluster
 :toc: right
 
+== Overview
+Docker is being used to create a cluster that can run a number of applications that are independent of one another.
+An example is running an MQTT server (mosquitto) in one container, and another container running a manager to coordinate solar energy and car charging.
+The two containers can have different dependencies, such as different versions of python, and they do not interact with each other.
+They only communicate over the network.
+The cluster spreads the network across the cluster so that containers do not need to run on the same hardware and can be sread across the cluster.
+
+.difference between containers and VMs
+image::./images/virtualization.png[]
+
+The reason not to use VMs is that they require too many resources.
+Using Containers reduces the amount of required resources so that even a small Pi Zero can be used.
+
+.Using Containers as opposed to VMs:
+* reduces required memory
+* reduces CPU overhead
+** individual containers do not need a full blown OS each
+* reduces disk storage
+* requires the apps to be able to run on the docker systems OS
+
 == docker
 https://www.youtube.com/watch?v=qSpfWP-Fgjc
 This is where I got the information on how to do most of the things.
 
 https://www.raspberrypi.com/software/
-This where I installed the Raspberrypi Imager. With this application, you can image a SD-Card to have the proper OS for your raspberrypi installed before you put it in. This will obviously come to hand when we are going to be setting up the cluster´s software.
+This where I installed the Raspberrypi Imager. With this application, you can image a SD-Card to have the proper OS for your raspberrypi installed before you put it in. This will obviously come to hand when we are going to be setting up the cluster's software.
 
 Whilst I was doing this, my father made a nice image to show what we will need for the cluster to work. We will need to assign static IPs to all of the individual piZs, edit the host file and include important network information, create a number of ssh keys and connections to all of the piZs and much more. All of that is included in the following plantuml iamge.
 
 .overtview of setup
 image::images/context.png[]
 
-We then downlaoded docker and set it up witht the help of this video.
+We then downloaded docker and set it up witht the help of this video.
 https://www.youtube.com/watch?v=-jLdkDxCDMo
-A few steps might have to be done deifferently, especially when one gets to the point to initialize the swarm. There we had to log int our own router and assign the static IPs for all of the nodes (piZ1, piZ2, piZ3, piZ4). When doing so, it is important to specify the leasetime to infinite to prevent the IPs from changing later. I would recommend always looking at the settings from the command "ip a" before changing the IPs and MACs on your router.
+A few steps might have to be done differently, especially when one gets to the point to initialize the swarm. There we had to log int our own router and assign the static IPs for all of the nodes (piZ1, piZ2, piZ3, piZ4). When doing so, it is important to specify the leasetime to infinite to prevent the IPs from changing later. I would recommend always looking at the settings from the command "ip a" before changing the IPs and MACs on your router.
 
 == gadget ethernet and serial
 

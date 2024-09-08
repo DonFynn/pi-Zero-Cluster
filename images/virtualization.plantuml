@@ -1,0 +1,56 @@
+@startuml
+title containers in context
+footer (C)2024 Fynn Donnellan
+
+skinparam BackgroundColor #fff/aaf
+skinparam rectangleBackgroundColor #fff/aaf
+skinparam rectangleBackgroundColor<<OS>> #fff/orange
+skinparam rectangleBackgroundColor<<application>> #fff/blue
+skinparam rectangleBackgroundColor<<hardware>> #fff/green
+skinparam rectangleBackgroundColor<<VM>> #fff/green
+skinparam Shadowing 1
+
+rectangle "Raspberry Pi" as hw.1 <<hardware>> {
+    rectangle "Raspbian" as hw.1.os <<OS>>{
+        rectangle "docker" as hw.1.os.docker <<application>> {
+            rectangle "container 1" as hw.1.os.docker.c.1 <<Container>> {
+                rectangle "APP" as hw.1.os.docker.c.1.app.1 <<application>>
+            }
+            rectangle "container 2" as hw.1.os.docker.c.2 <<Container>> {
+                rectangle "APP" as hw.1.os.docker.c.2.app.1 <<application>>
+            }
+        }
+    }
+}
+rectangle "Raspberry Pi" as hw.3 <<hardware>> {
+    rectangle "Raspbian" as hw.3.os <<OS>>{
+        rectangle "docker" as hw.3.os.docker <<application>> {
+            rectangle "container 1" as hw.3.os.docker.c.1 <<Container>> {
+                rectangle "APP" as hw.3.os.docker.c.1.app.1 <<application>>
+            }
+            rectangle "container 2" as hw.3.os.docker.c.2 <<Container>> {
+                rectangle "APP" as hw.3.os.docker.c.2.app.1 <<application>>
+            }
+        }
+    }
+}
+rectangle "macbook" as hw.2 <<hardware>> {
+    rectangle "MACOS" as hw.2.os <<OS>>{
+        rectangle "parallels hypervisor" as hw.2.os.hyp <<application>> {
+            rectangle "VM" as hw.2.os.hyp.vm.1 <<VM>> {
+                rectangle "windows" as hw.2.os.hyp.vm.1.os <<OS>> {
+                    rectangle "visio" as hw.2.os.hyp.vm.1.os.app.1 <<application>>
+                }
+            }
+        }
+    }
+}
+
+legend
+    A container is actually just a kernel namespace to separate the processes out from the other process in the OS.
+    A VM on the other hand emulates a whole new hardware and requires a whole new OS to boot up.
+    A container can start quickly because it#s just the app starting up and not a whole boot process.
+
+end legend
+
+@enduml
