@@ -3,6 +3,10 @@
 
 == Overview
 Docker is being used to create a cluster that can run a number of applications that are independent of one another.
+
+.Picture of the cluster
+image::./images/photo-cluster.jpeg[]
+
 An example is running an MQTT server (mosquitto) in one container, and another container running a manager to coordinate solar energy and car charging.
 The differerent containers can have different dependencies, such as different versions of python, and they do not interact with each other.
 The containers only communicate over the network.
