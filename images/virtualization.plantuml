@@ -49,8 +49,7 @@ rectangle "macbook" as hw.2 <<hardware>> {
 legend
     A container is actually just a kernel namespace to separate the processes out from the other process in the OS.
     A VM on the other hand emulates a whole new hardware and requires a whole new OS to boot up.
-    A container can start quickly because it#s just the app starting up and not a whole boot process.
-
+    A container can start quickly because it's just the app starting up and not a whole boot process.
 end legend
 
 @enduml
