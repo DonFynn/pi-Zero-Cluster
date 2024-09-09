@@ -1,18 +1,18 @@
-= pi-Zero-Cluster
+= Pi-Zero-Cluster
 :toc: right
 
 == Overview
 Docker is being used to create a cluster that can run a number of applications that are independent of one another.
 An example is running an MQTT server (mosquitto) in one container, and another container running a manager to coordinate solar energy and car charging.
-The two containers can have different dependencies, such as different versions of python, and they do not interact with each other.
-They only communicate over the network.
-The cluster spreads the network across the cluster so that containers do not need to run on the same hardware and can be sread across the cluster.
+The differerent containers can have different dependencies, such as different versions of python, and they do not interact with each other.
+The containers only communicate over the network.
+The cluster spreads the network across the cluster so that containers do not need to run on the same hardware and can be spread across the cluster.
 
 .difference between containers and VMs
 image::./images/virtualization.png[]
 
 The reason not to use VMs is that they require too many resources.
-Using Containers reduces the amount of required resources so that even a small Pi Zero can be used.
+Using containers reduces the amount of required resources so that even a small Pi Zero can be used for many applications.
 
 .Using Containers as opposed to VMs:
 * reduces required memory
@@ -20,44 +20,89 @@ Using Containers reduces the amount of required resources so that even a small P
 ** individual containers do not need a full blown OS each
 * reduces disk storage
 * requires the apps to be able to run on the docker systems OS
+** Can't run a windows or MACOS app on a linux Docker
 
-== docker
-https://www.youtube.com/watch?v=qSpfWP-Fgjc
-This is where I got the information on how to do most of the things.
+== Docker
+As described above we're using docker here.
+This section explains most of the steps to get the base system up and running.
 
-https://www.raspberrypi.com/software/
+.Introductory Video to installing docker on RPi
+* link:https://www.youtube.com/watch?v=qSpfWP-Fgjc[^]
+
+The above is where I got the information on how to do most of the things.
+
+.RPi software download
+* link:https://www.raspberrypi.com/software/[^]
+
 This where I installed the Raspberrypi Imager. With this application, you can image a SD-Card to have the proper OS for your raspberrypi installed before you put it in. This will obviously come to hand when we are going to be setting up the cluster's software.
 
-Whilst I was doing this, my father made a nice image to show what we will need for the cluster to work. We will need to assign static IPs to all of the individual piZs, edit the host file and include important network information, create a number of ssh keys and connections to all of the piZs and much more. All of that is included in the following plantuml iamge.
+Whilst I was doing this, the diagram was created to show how the cluster is to be connected. 
 
-.overtview of setup
+.overview of setup
 image::images/context.png[]
 
-We then downloaded docker and set it up witht the help of this video.
-https://www.youtube.com/watch?v=-jLdkDxCDMo
+.Further tasks after installing the OS
+* Assign static IPs to all of the individual piZs
+* edit the host file and include important network information
+* create a number of ssh keys and connections to all of the piZs.
+
+
+.We then download docker and set it up with the help of this video.
+* link:https://www.youtube.com/watch?v=-jLdkDxCDMo[^]
+
 A few steps might have to be done differently, especially when one gets to the point to initialize the swarm. There we had to log int our own router and assign the static IPs for all of the nodes (piZ1, piZ2, piZ3, piZ4). When doing so, it is important to specify the leasetime to infinite to prevent the IPs from changing later. I would recommend always looking at the settings from the command "ip a" before changing the IPs and MACs on your router.
 
-== gadget ethernet and serial
+== Gadget ethernet and serial
 
-We had to make the piZeros into functioning ethernet gadgets. To achieve this , we used https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget/ethernet-tweaks. We imaged oe of the disks to the full extent that is described in this tutorial and then copied all of it´s contents into a file to image the other 3 nodes. Instead of using the pi itself as the gateway, we used a commander node and it´s IP as the router/gateway. We also did not actually use a serial conection to do any of this, instead using an already established ssh connection, although we did run into some errors along the way and we did have to completely reconfigure the IP etc. of the first node we were working on to ensure the ssh connecton, because it broke a few times. Otherwise this tutorial worked just about fine. We also recommend maybe buying this useful little gadget https://shop.pimoroni.com/products/cluster-hat?variant=22064645063, as it may just relieve you of a lot of work and stress with having to use individual power supplies and USB hubs and so forth and so on. 
+To make the piZeros into functioning ethernet gadgets so that they are connected by IP over USB and not just wifi the following has to be done. 
 
-== regenerating ssh keys
+.Adafruit example
+* link:https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget/ethernet-tweaks[^]
+
+Image one of the disks to the full extent that is described in this tutorial and then copy all of its contents into a file to image the other 3 nodes. Instead of using the pi itself as the gateway, we used a commander node and it's IP as the router/gateway. 
+
+We also did not actually use a serial conection to do any of this, instead using an already established ssh connection, although we did run into some errors along the way and we did have to completely reconfigure the IP etc. of the first node we were working on to ensure the ssh connecton, because it broke a few times. Otherwise this tutorial worked just about fine. 
+
+.Maybe next time: Pi cluster hat 
+* link:https://shop.pimoroni.com/products/cluster-hat?variant=22064645063[^]
+** It may just relieve you of a lot of work and stress with having to use individual power supplies and USB hubs. 
+
+== Regenerating ssh keys
 
 .regenerate keys
 ----
 sudo dpkg-reconfigure openssh-server
 ----
 
-Because we had cloned EVERYTHING from one disk to another, we had also cloned the ssh keys. This meant, logging into any of the nodes would result in logging into the first node. This problem is easily resolved by properly regenerating the ssh keys on every cluster one after the other, by logging into the original first, regening the ssh key for it. Then, you´ll want to log into the next node, still using the old ssh key and repeat the process until you are done with every node. You should then be able to log into every node individually again.
+Because we had cloned EVERYTHING from one disk to another, we had also cloned the ssh keys. This meant, logging into any of the nodes would result in logging into the first node. This problem is easily resolved by properly regenerating the ssh keys on every cluster one after the other, by logging into the original first, and regenerating the ssh key for it. Then, you'll want to log into the next node, still using the old ssh key and repeat the process until you are done with every node. You should then be able to log into every node individually again.
 
-== new pis for the cluster and reimagery
+== New Pis for the cluster and re-imagery
 
-We got completely new cluster nodes after nearly a year of not working on this anymore. The new pis have to be reimaged and set up completely by scratch. Maybe the stuff that we used before will still work, but there is no guarantee. I will also start adding files for 3D-printing all the stuff that one needs for the cluster if one isn´t into buying it. By the way, the new pis are raspberry pie 02W.
+We got completely new cluster nodes after nearly a year of not working on this anymore. The new pis have to be re-imaged and set up completely by scratch. Maybe the stuff that we used before will still work, but there is no guarantee. I will also start adding files for 3D-printing all the stuff that one needs for the cluster if one isn't into buying it. By the way, the new pis are raspberry pi zero 2W. The project started by tinkeriung with 32bit Pi zeros and has moved to the new Pi zero 2 and 64bit.
 
-== new images for the pis
+== New images for the pis
 
-We decided to image them with the Raspberry OS (Legacy-64bit) Lite. You will want to get the Raspberry imager for this obviously. Now, you want to allow the pis to access the WiFi and give them SSID and password, as this will make the process way easier. Then, you will want to give them hostnames, e.g. "piZc1/2/3/4". In our case, we specify the rest to be located in Germany. Then, we will go on to set a username and a password for the pi. The username can be the same as the hostname, that shouldn´t be a problem. You will need this to enable SSH. NOW NOTE, don´t set the keyboard to be cyrrilic or something of the sorts and the pi 02W can only do 2.4GHz on wireless. If you don´t do these steps, someone will laugh at you, believe me. When enabling ssh, you will want to make it only accessible with your public key, more of which can be added after you´re done configuring. You can add yours by going to your local machine and doing the following:
+We decided to image them with the Raspberry OS (Legacy-64bit) Lite. 
+You will want to get the Raspberry imager for this obviously. 
 
+* Allow the pis to access the WiFi and give them SSID and password, as this will make the process way easier. 
+* Then give them hostnames, e.g. "piZc1/2/3/4". 
+* In our case, we specify the rest to be located in Germany so that the wifi doesn't break laws and the language is set up
+* Set a username and a password for the pi. 
+** The username can be the same as the hostname, that shouldn't be a problem. 
+** You will need this to enable SSH. 
+
+[NOTE]
+====
+Be carefull when setting keyboard etc as if you don't watch out you'll have the wrong setup and wil find it hard to find the right keys.
+Also the pi zero 2W can only do 2.4GHz on wireless so don't try adding it to anything but a 2.4GHz wifi as that will fail. 
+====
+
+* When enabling ssh, you will want to make it only accessible with your public key, more of which can be added after you're done configuring. 
+
+You can add yours by going to your local machine, from which you will be accessing the cluster, and doing the following:
+
+.Get your local ssh key to add to the image
 [source,BASH]
 ----
 cd
@@ -65,11 +110,26 @@ cd .ssh
 cat id_rsa.pub
 ----
 
-and then copying that into the respctive field. 
+And then copying that into the respective field in the imager. 
 
-== update nodes OS
+== Basics of ssh
 
-the following shell script gets copied to the systems below:
+To ssh into your newly setup pis, you will want to do the following:
+
+.SSH to a Pi
+----
+ssh hostnameOfYourPi@usernameOfYourPi
+----
+
+If your key has been copied across you will not be asked for a password as unlocking your local key secures access.
+It's a very good idea to have a password for your local ssh key when you set it up for that reason.
+
+== Update nodes OS
+
+The following shell script gets copied to the systems and can be executed from your local system with the short script after it:
+
+* Updates the package lists
+* upgrades the systems software if new versions of installed software is available
 
 .Script that gets copied `cluster-setup/initial-setup.sh`
 [source.BASH]
@@ -77,7 +137,7 @@ the following shell script gets copied to the systems below:
 include::cluster-setup/initial-setup.sh[]
 ----
 
-.short script to run thruogh all 4 systems
+.short script to update all 4 systems
 [source,BASH]
 ----
 for system in piZc1 piZc2 piZc3 piZc4
@@ -87,9 +147,13 @@ for system in piZc1 piZc2 piZc3 piZc4
 done
 ----
 
-== install docker 
+== Install docker 
 
-the following shell script gets copied to the systems below:
+The following shell script gets copied to the systems and can be executed from your local system with the short script after it:
+
+* pulls a docker install script from the web
+* executes the script and installs docker
+* adds the user to the docker group to allow docker to be used without sudo
 
 .Script that gets copied `cluster-setup/initial-setup.sh`
 [source.BASH]
@@ -97,7 +161,7 @@ the following shell script gets copied to the systems below:
 include::cluster-setup/initial-docker.sh[]
 ----
 
-.short script to run thruogh all 4 systems
+.Short script to install docker on all 4 systems
 [source,BASH]
 ----
 for system in piZc1 piZc2 piZc3 piZc4
@@ -107,40 +171,15 @@ for system in piZc1 piZc2 piZc3 piZc4
 done
 ----
 
-.short script to run through all 4 systems
+=== Test docker is working
+
+The following script checks that docker is running by checking the docker version:
+
+.Short script to get docker version on all 4 systems
 [source,BASH]
 ----
 for system in piZc1 piZc2 piZc3 piZc4
     do
     ssh ${system}@${system} docker --version
 done
-----
-
-
-== Set-up cluster worker
-
-.copy worker script to node
-[source,BASH]
-----
-scp cluster-setup/initial-worker.sh nodex:/path/initial.sh
-----
-
-.copy manager script to node
-[source,BASH]
-----
-scp cluster-setup/initial-manager.sh nodex:/path/initial.sh
-----
-
-.Start install script on node
-[source,BASH]
-----
-ssh nodex initial.sh
-----
-
-== basics of ssh
-
-To ssh into your newly setup pis, you will want to do the following:
-
-----
-ssh hostnameOfYourPi@usernameOfYourPi
 ----
