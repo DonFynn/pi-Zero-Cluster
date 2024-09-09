@@ -231,6 +231,32 @@ for system in piZc1 piZc2 piZc3 piZc4
 done
 ----
 
+== raspi-config settings per script
+Normally you are asked to set the rasp-config settings for hostname etc interactively with the `rasp-config` tool.
+
+**It's also possible to do it via script.**
+
+.setting raspi-config settings by CLI (non-interactively)
+----
+# set a new hostname (change it to the one you want)
+sudo raspi-config nonint do_hostname NEW_HOSTNAME
+# set the wifi country
+sudo raspi-config nonint do_wifi_country DE
+# set the locale
+sudo raspi-config nonint do_change_locale en_US.UTF-8
+# reduce amount of GPU mem to minimum
+sudo raspi-config nonint do_memory_split 16
+# set SSH on
+sudo raspi-config nonint do_ssh 0 
+# set boot to CLI (no autologin)
+sudo raspi-config nonint do_boot_behaviour B1
+----
+
+.Some more of the options can be found in the source code here:
+* link:https://github.com/raspberrypi-ui/rc_gui/blob/master/src/rc_gui.c[^]
+
+This is useful for when you want a cluster to have all the same settings and you don't want to spend a long time navigating menus on each device only to forget a setting anyway.
+
 == Install docker 
 
 The following shell script gets copied to the systems and can be executed from your local system with the short script after it:
