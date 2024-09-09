@@ -29,7 +29,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 include::includes/asciidoc-format-header.adoc[]
-
+ 
 ifdef::env-github[toc::[]]
 
 == Document information
