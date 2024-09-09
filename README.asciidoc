@@ -241,7 +241,9 @@ If you want to modify the design you will need:
 
 Then open up the `.scad` files.
 
-If you just want to print the designs just open the `.STL` files with a slicer.
+If you just want to print the designs just open the `.STL` files with a slicer. The slicewr creates gcode files for specific printers.
 
 .Slicer that was used to print the above
 * link:https://ultimaker.com/software/ultimaker-cura/[^]
+
+The brackets and the cluster holder where printed on an Ender 3 printer in PLA.
