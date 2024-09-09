@@ -209,3 +209,39 @@ for system in piZc1 piZc2 piZc3 piZc4
     ssh ${system}@${system} docker --version
 done
 ----
+
+
+[appendix]
+== 3D files
+The files here are created in openSCAD which is a parametric 3D CAD program for creating solid printable objects.
+
+.Bracket for the Pi Zero
+image::./images/3D/RPI_zero_Cluster_mounting_bracket_v2.png[]
+
+.The above bracket was downloaded here:
+* link:https://www.thingiverse.com/thing:2502615[]
+
+.Base for the power supply and the USB hub
+image::./images/3D/RPI_zero_Cluster_mounting_bracket_power.png[]
+
+The above was created specifically for this cluster to hold:
+
+* The 4 Pi Zero W2
+* The power supply
+* The USB hub
+
+.Putting it together
+image::./images/photo-cluster.jpeg[]
+
+The source files, and the STL files, are in the `images` directory in the sub folder `3D`.
+
+If you want to modify the design you will need:
+
+* link:https://openscad.org/[^]
+
+Then open up the `.scad` files.
+
+If you just want to print the designs just open the `.STL` files with a slicer.
+
+.Slicer that was used to print the above
+* link:https://ultimaker.com/software/ultimaker-cura/[^]
