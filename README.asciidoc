@@ -48,6 +48,13 @@ ifdef::env-github[]
 * link:{url-repo-pages}[Document online ^]
 * link:{url-repo}[Document Source ^]
 * link:{url-repo-pages-pdf}[Document PDF ^]
+
+[NOTE]
+=====
+Be aware that github does not properly display this document.
+If you want to see the document properly open either the PDF or the web pages above.
+=====
+
 endif::env-github[]
 ====
 
