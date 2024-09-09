@@ -2,7 +2,7 @@
 //
 //General DOC INFO
 :year: 2024
-:org: Virtual Space Research
+:org: VSR
 :copyright: (C){year} Fynn Conor Donnellan
 :classification: {org}
 :GH-org: DonFynn
@@ -46,7 +46,7 @@ icon:file-pdf-o[2x,link="{url-repo-pages-pdf}"] Document PDF
 endif::env-github[]
 ifdef::env-github[]
 * link:{url-repo-pages}[Document online ^]
-* link:{url-repo}[Document Source ^]
+* link:{url-repo}[Document Github Source ^]
 * link:{url-repo-pages-pdf}[Document PDF ^]
 
 [NOTE]
