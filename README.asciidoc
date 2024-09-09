@@ -22,6 +22,12 @@ Using containers reduces the amount of required resources so that even a small P
 * requires the apps to be able to run on the docker systems OS
 ** Can't run a windows or MACOS app on a linux Docker
 
+=== Context (done from a Mac but can be done from Windows too)
+The following steps assume your using a UNIX system like a MAC or another Linux system.
+If you're doing this from Windows you might want to try doing some of the steps that involve SSH and git from the Windows Subsystem for Linux.
+
+* link:https://learn.microsoft.com/en-us/windows/wsl/install[^]
+
 == Docker
 As described above we're using docker here.
 This section explains most of the steps to get the base system up and running.
@@ -123,6 +129,22 @@ ssh hostnameOfYourPi@usernameOfYourPi
 
 If your key has been copied across you will not be asked for a password as unlocking your local key secures access.
 It's a very good idea to have a password for your local ssh key when you set it up for that reason.
+
+== Go to the `cluster-setup` directory of the repository
+For the next steps you will want to be in the `cluster-setup` directory of the repository that contains the scripts that have been created to simplify some of the steps.
+
+.Clone the repo to your local machine if not already done
+[source,BASH]
+----
+git clone https://github.com/DonFynn/pi-Zero-Cluster.git
+----
+
+.Change to the cluster setup directory
+[source, BASH]
+----
+cd pi-Zero-Cluster
+cd cluster-setup
+----
 
 == Update nodes OS
 
