@@ -1,28 +1,29 @@
 @startuml
 title Pi Zero W cluster
-footer (C)2022 Fynn Conor Donnellan
-skinparam NoteShadowing true
+footer (C)2024 Fynn Conor Donnellan
+skinparam Shadowing true
 skinparam BackgroundColor #fff/aaf
 skinparam CardBackgroundColor #fff/aaf
 skinparam CloudBackgroundColor #fff/green
+
 legend
-The Pi Zero Cluster
-HW:
-    4x Pi Zero W
-    1x P400
-    USB data
-    USB Power
-    Wifi
-SW:
-    Linux
-    Docker + Docker Swarm
-    SSH
-Setup:
-    each node has a user "node" similar to "pi" in previous versions 
-    initial testing passowrd: "password of choice"
+    The Pi Zero Cluster
+    HW:
+        4x Pi Zero W
+        1x P400
+        USB data
+        USB Power
+        Wifi
+    SW:
+        Linux
+        Docker + Docker Swarm
+        SSH
+    Setup:
+        each node has a user "node" similar to "pi" in previous versions 
+        initial testing passowrd: "password of choice"
 end legend
 
-actor node
+actor user
 
 card "piz1" as piZ.1 {
     card "32G" as piZ.1.32G
@@ -70,6 +71,7 @@ card USB.1 <<USB>> {
     interface "4" as USB.1.4
 }
 
+user -> wifi
 
 ''Power supply
 piZ.1.power -- power.1.1 : 5V
