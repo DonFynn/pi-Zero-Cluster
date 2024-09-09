@@ -6,7 +6,7 @@
 :copyright: (C){year} Fynn Conor Donnellan
 :classification: {org}
 :GH-org: DonFynn
-:GH-repo: pi-zero-cluster
+:GH-repo: pi-Zero-Cluster
 :repo-file: README
 //
 // URLs
